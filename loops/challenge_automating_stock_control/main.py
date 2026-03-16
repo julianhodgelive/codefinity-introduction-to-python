@@ -8,29 +8,16 @@ inventory = {
 
 discount_threshold = 100
 
-#currentstock = inventory.get("Bread")[:3]
-#print(currentstock)
-
-print("Processing Started:")
+print("Processing started")
 
 for item in inventory:
-    while inventory.get(item)[0] <= inventory.get(item)[1] :
-        currentstock = inventory.get(item)[0]
-        minimumstock = inventory.get(item)[1]
-        restockvalue = inventory.get(item)[2]
-        salesstatus = inventory.get(item)[3]
-        currentstock += restockvalue
-        inventory.update({item:currentstock})
-        
-    
-        
-        
     print(f"Processing {item}")
-    print(inventory)
+    current_stock, min_stock, restock_amount, on_sale = inventory[item]
+    while current_stock < min_stock:
+        current_stock += restock_amount
+    inventory[item][0] = current_stock
+    if current_stock > discount_threshold and not on_sale:
+        inventory[item][3] = True
 
-
-#    currentstock = item
-#    print(currentstock)
-    
-#      current_stock = item[]
-    
+print("Processing completed")
+print(inventory)
